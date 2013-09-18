@@ -1,5 +1,5 @@
 <polymer-element name="qr-reader"
-		 attributes="output outputAttr interval scale">
+		 attributes="output outputAttr interval">
 
     <style>
         #canvas {
@@ -87,9 +87,9 @@
             capture: function () {
                 var w = this.$.video.videoWidth * this.scale,
                     h = this.$.video.videoHeight * this.scale,
-                    qr_canvas = this.$.canvas.getContext('2d');
+                    canvas = this.$.canvas.getContext('2d');
 
-                qr_canvas.drawImage(this.$.video.impl, 0, 0, w, h);
+                canvas.drawImage(this.$.video.impl, 0, 0, w, h);
                 try {
                     qrcode.decode();
                 }

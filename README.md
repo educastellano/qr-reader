@@ -30,11 +30,11 @@ Webcomponent wrapper to read QR codes.
 
 ## Options
 
-Attribute  | Options                   | Default             | Description
----        | ---                       | ---                 | ---
-`foo`      | *string*                  | `bar`               | Lorem ipsum
-`bar`      | `abc`, `def`, `ghi` 	   | `foo`               | Lorem ipsum
-`height`   | *int*                     | `100`               | Lorem ipsum
+Attribute     | Options                | Default             | Description
+---           | ---                    | ---                 | ---
+`interval`    | *int*                  | `1000`              | Interval of time in each capture (in ms).
+`output`      | *string*               | `undefined`         | Optional. CSS selectors to get the tag element where the QR code will be written.
+`outputAttr`  | *string*          	   | `textContent`       | Optional. Attribute of the output element where the value will be set.
 
 
 ## Contributing
@@ -47,6 +47,8 @@ Attribute  | Options                   | Default             | Description
 
 ## History
 
+* v0.0.2 September 18, 2013
+	* First working version of the component.
 * v0.0.1 September 16, 2013
 	* Started project using [boilerplate-element](https://github.com/customelements/boilerplate-element)
 
