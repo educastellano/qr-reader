@@ -1,5 +1,5 @@
 <polymer-element name="qr-reader"
-		 attributes="output outputAttr interval">
+		 attributes="output outputAttr interval onRead">
 
     <style>
         #canvas {
@@ -18,7 +18,8 @@
 	<script>
     (function () {
         var interval_id,
-            stream_obj;
+            stream_obj,
+            onRead;
 
 		Polymer('qr-reader', {
 
@@ -28,6 +29,8 @@
 
             scale: 0.5,
 
+            onRead: '',
+
             ready: function () {
                 var me = this,
                     media_options,
@@ -35,7 +38,7 @@
                     error;
 
                 qrcode.callback = function (value) {
-                    me.onRead(value);
+                    onRead(me, value);
                 };
 
                 navigator.getUserMedia =
@@ -109,14 +112,34 @@
                         this.$.video.src = null;
                     }
                 }
-            },
-
-            onRead: function (value) {
-                var output = this.output ? document.querySelector(this.output) : this.$.output;
-                output[this.outputAttr] = value;
             }
 
 		});
+
+        onRead = function (el, value) {
+            var output,
+                attrs,
+                obj = window,
+                i;
+
+            if (el.output !== null) {
+                output = el.output ? document.querySelector(el.output) : el.$.output;
+                output[el.outputAttr] = value;
+            }
+            if (el.onRead) {
+                attrs = el.onRead.split('.');
+                for (i=0; i<attrs.length; i++) {
+                    obj = obj[attrs[i]];
+                }
+                obj(value);
+            }
+            el.asyncFire('polymer-signal', {
+                name: 'qr-read',
+                data: {
+                    value: value
+                }
+            });
+        };
 
     })();
 

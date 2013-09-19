@@ -2,7 +2,7 @@
 
 Webcomponent wrapper to read QR codes.
 
-> Maintained by [Your Name](https://github.com/yourname).
+> Maintained by [Eduard C.](https://github.com/educastellano).
 
 ## Demo
 
@@ -25,16 +25,17 @@ Webcomponent wrapper to read QR codes.
 3. Start using it!
 
 	```html
-	<qr-reader></qr-reader>
+	<qr-reader output></qr-reader>
 	```
 
 ## Options
 
 Attribute     | Options                | Default             | Description
 ---           | ---                    | ---                 | ---
+`output`      | *string*               | `undefined`         | Default output (with <qr-reader output></qr-reader), or CSS selectors of an external tag.
+`outputAttr`  | *string*          	   | `textContent`       | Attribute of the external tag where the value will be set.
+`onRead`      | *string*          	   | `undefined`         | String containing a function name to be executed after read. It can contain namespaces, i.e.: "App.ctrl.onRead".
 `interval`    | *int*                  | `1000`              | Interval of time in each capture (in ms).
-`output`      | *string*               | `undefined`         | Optional. CSS selectors to get the tag element where the QR code will be written.
-`outputAttr`  | *string*          	   | `textContent`       | Optional. Attribute of the output element where the value will be set.
 
 
 ## Contributing

@@ -3,17 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>&lt;qr-reader&gt;</title>
-
-	<!-- Importing Web Component's Polyfill -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130905/polymer.min.js"></script>
-
-	<!-- Importing Custom Elements -->
-	<link rel="import" href="src/qr-reader.html">
+    <style>
+        ul {
+            margin-top: 20%;
+            margin-left: 40%;
+        }
+    </style>
 </head>
 <body>
-
-	<!-- Using Custom Elements -->
-	<qr-reader></qr-reader>
-
+    <ul>
+        <li><a href="example1.html">Default output</a></li>
+        <li><a href="example2.html">Custom output</a></li>
+        <li><a href="example3.html">onRead property</a></li>
+    </ul>
 </body>
 </html>

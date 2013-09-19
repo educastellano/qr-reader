@@ -5,6 +5,7 @@
  * https://github.com/LazarSoft/jsqrcode
  *
  * Changed:
+ * - Code wrapped in a function scope
  * - Global variables removed.
  *
  ****************************************************************************************************/

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>&lt;qr-reader&gt;</title>
+
+	<!-- Importing Web Component's Polyfill -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130905/polymer.min.js"></script>
+
+	<!-- Importing Custom Elements -->
+	<link rel="import" href="src/qr-reader.html">
+</head>
+<body>
+
+	<!-- Using Custom Elements -->
+	<qr-reader output="#qr-data" outputAttr="value"></qr-reader>
+    <input id="qr-data" style="width: 300px;" />
+    <br>
+    <br>
+    <a href="index.html">Back to examples</a>
+
+</body>
+</html>
