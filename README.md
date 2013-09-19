@@ -1,6 +1,6 @@
 # &lt;qr-reader&gt;
 
-Webcomponent wrapper to read QR codes.
+Webcomponent wrapper to read QR codes, using [jsqrcode](https://github.com/LazarSoft/jsqrcode) lib.
 
 > Maintained by [Eduard C.](https://github.com/educastellano).
 
