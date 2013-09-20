@@ -32,7 +32,7 @@ Webcomponent wrapper to read QR codes, using [jsqrcode](https://github.com/Lazar
 
 Attribute     | Options                | Default             | Description
 ---           | ---                    | ---                 | ---
-`output`      | *string*               | `undefined`         | Default output (with <qr-reader output></qr-reader), or CSS selectors of an external tag.
+`output`      | *string*               | `undefined`         | Default output if set, or CSS selectors of an external tag.
 `outputAttr`  | *string*          	   | `textContent`       | Attribute of the external tag where the value will be set.
 `onRead`      | *string*          	   | `undefined`         | String containing a function name to be executed after read. It can contain namespaces, i.e.: "App.ctrl.onRead".
 `interval`    | *int*                  | `1000`              | Interval of time in each capture (in ms).
