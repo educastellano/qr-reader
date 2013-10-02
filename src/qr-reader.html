@@ -1,14 +1,9 @@
 <polymer-element name="qr-reader"
 		 attributes="output outputAttr interval onRead">
 
-    <style>
-        #canvas {
-            display: none;
-        }
-    </style>
     <template>
         <video id="video" autoplay width="320" height="240">Put your fallback message here.</video>
-        <canvas id="canvas" width="320" height="240"></canvas>
+        <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
         <div id="output"></div>
         <content></content>
     </template>

@@ -6,7 +6,7 @@ Webcomponent wrapper to read QR codes, using [jsqrcode](https://github.com/Lazar
 
 ## Demo
 
-> [Check it live](http://educastellano.github.io/qr-reader).
+> [Check it live](http://educastellano.github.io/qr-reader). (works at least on Chrome Canary 32.0.1657.2)
 
 ## Usage
 
