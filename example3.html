@@ -4,27 +4,30 @@
 	<meta charset="UTF-8">
 	<title>&lt;qr-reader&gt;</title>
 
+	<link rel="stylesheet" type="text/css" href="style.css">
+
 	<!-- Importing Web Component's Polyfill -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130905/polymer.min.js"></script>
+	<script src="src/jsqrcode.js"></script>
 
 	<!-- Importing Custom Elements -->
 	<link rel="import" href="src/qr-reader.html">
 </head>
 <body>
 
-	<!-- Using Custom Elements -->
-    <qr-reader onRead="App.ctrl.onRead"></qr-reader>
-    <br>
-    <br>
-    <a href="index.html">Back to examples</a>
-    <script>
-        window.App = {
-            ctrl: {
-                onRead: function (value) {
-                    alert(value);
-                }
-            }
-        }
-    </script>
+	<div class="content">
+		<!-- Using Custom Elements -->
+	    <qr-reader onRead="App.ctrl.onRead"></qr-reader>
+	    <a href="index.html" class="back">Back to examples</a>
+	    <script>
+	        window.App = {
+	            ctrl: {
+	                onRead: function (value) {
+	                    alert(value);
+	                }
+	            }
+	        }
+	    </script>
+	</div>
 </body>
 </html>

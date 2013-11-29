@@ -22,7 +22,13 @@ Webcomponent wrapper to read QR codes, using [jsqrcode](https://github.com/Lazar
 	<link rel="import" href="src/qr-reader.html">
 	```
 
-3. Start using it!
+3. Import [jsqrcode](https://github.com/LazarSoft/jsqrcode) lib:
+
+	```html
+	<script src="src/jsqrcode.js"></script>
+	```
+
+4. Start using it!
 
 	```html
 	<qr-reader output></qr-reader>
@@ -48,6 +54,8 @@ Attribute     | Options                | Default             | Description
 
 ## History
 
+* v0.0.3 September 18, 2013
+	* jsqrcode it's not called from the component. It needs now to be added as a dependency.
 * v0.0.2 September 18, 2013
 	* First working version of the component.
 * v0.0.1 September 16, 2013

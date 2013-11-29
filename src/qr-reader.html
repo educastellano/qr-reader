@@ -7,9 +7,7 @@
         <div id="output"></div>
         <content></content>
     </template>
-    <!-- jsqrcode lib-->
-    <script src="jsqrcode.js"></script>
-    <!-- qr-reader component -->
+
 	<script>
     (function () {
         var interval_id,
@@ -64,7 +62,7 @@
                 }
                 else {
                     this.$.output.innerHTML = 'Sorry, native web camera streaming is not supported by this browser...';
-                }                
+                }
             },
 
             startScan: function () {
