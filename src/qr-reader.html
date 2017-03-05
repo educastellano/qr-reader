@@ -1,141 +1,161 @@
-<polymer-element name="qr-reader"
-		 attributes="output outputAttr interval onRead">
-
+<dom-module id="qr-reader">
     <template>
+        <style>
+        </style>
         <video id="video" autoplay width="320" height="240">Put your fallback message here.</video>
         <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
         <div id="output"></div>
         <content></content>
     </template>
-
-	<script>
-    (function () {
-        var interval_id,
+    <script>
+        (function() {
+            var interval_id,
             stream_obj,
             onRead;
+            Polymer({
+                is: 'qr-reader',
+                properties: {
+                    output: {
+                        type: String
+                    },
+                    outputAttr: {
+                        type: String,
+                        value: 'textContent'
+                    },
+                    interval: {
+                        type: String,
+                        value: 1000
+                    },
+                    onread: String,
+                    scale: {
+                        type: Number,
+                        value: 0.5
+                    },
+                    track: {
+                        type: String,
+                        notify: true,
+                        reflectToAttribute: true
+                    }
+                },
 
-		Polymer('qr-reader', {
-
-            outputAttr: 'textContent',
-
-            interval: 1000,
-
-            scale: 0.5,
-
-            onRead: '',
-
-            ready: function () {
-                var me = this,
+                ready: function() {
+                    var me = this,
                     media_options,
                     success,
                     error;
-
-                qrcode.callback = function (value) {
-                    onRead(me, value);
-                };
-
-                navigator.getUserMedia =
-                        navigator.getUserMedia ||
-                        navigator.webkitGetUserMedia ||
-                        navigator.mozGetUserMedia ||
-                        navigator.msGetUserMedia;
-
-                if (navigator.getUserMedia) {
-                    media_options = {
-                        "audio": false,
-                        "video": true
+                    qrcode.callback = function(value) {
+                        onRead(me, value);
                     };
+                    navigator.getUserMedia =
+                    navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia;
+                    if (navigator.getUserMedia) {
+                        var getBackCamera = new Promise(function(resolve, reject) {
+                            navigator.mediaDevices.enumerateDevices()
+                            .then(function(devices) {
+                                devices = devices.filter(function(d) {
+                                    return d.kind === 'videoinput';
+                                });
+                                var back = devices.find(function(d) {
+                                    return d.label.toLowerCase().indexOf('back') !== -1;
+                                }) || (devices.length && devices[devices.length - 1]);
+                                if (back) {
+                                    me.track = back.deviceId;
+                                    resolve(back.deviceId);
+                                }
+                            });
+                        });
+                        getBackCamera.then(function(id) {
+                            backCameraId = id;
+                            media_options = {
+                                audio: false,
+                                video: {
+                                    deviceId: {
+                                        exact: backCameraId
+                                    }
+                                }
+                            };
 
-                    success = function (stream) {
-                        me.$.video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
-                        stream_obj = stream;
-                        me.startScan();
-                    };
-
-                    error = function (error) {
-                        if (error && error.message) {
-                            console.log(error.message);
-                        }
-                    };
-
-                    navigator.getUserMedia(media_options, success, error);
-                }
-                else {
-                    this.$.output.innerHTML = 'Sorry, native web camera streaming is not supported by this browser...';
-                }
-            },
-
-            startScan: function () {
-                var me = this;
-
-                if (interval_id) {
-                    me.stop();
-                }
-                interval_id = setInterval(function (video, scale) {
-                    me.capture()
-                }, this.interval);
-            },
-
-            stopScan: function () {
-                clearInterval(interval_id);
-            },
-
-            capture: function () {
-                var w = this.$.video.videoWidth * this.scale,
+                            success = function(stream) {
+                                me.$.video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+                                stream_obj = stream;
+                                me.startScan();
+                            };
+                            error = function(error) {
+                                if (error) {
+                                    console.log(error);
+                                }
+                            };
+                            navigator.mediaDevices.getUserMedia(media_options).then(success).catch(error);
+                        })
+                    } else {
+                        this.$.output.innerHTML = 'Sorry, native web camera streaming is not supported by this browser...';
+                    }
+                },
+                startScan: function() {
+                    var me = this;
+                    if (interval_id) {
+                        me.stop();
+                    }
+                    interval_id = setInterval(function(video, scale) {
+                        me.capture()
+                    }, this.interval);
+                },
+                stopScan: function() {
+                    clearInterval(interval_id);
+                },
+                capture: function() {
+                    var w = this.$.video.videoWidth * this.scale,
                     h = this.$.video.videoHeight * this.scale,
                     canvas = this.$.canvas.getContext('2d');
-
-                canvas.drawImage(this.$.video.impl, 0, 0, w, h);
-                try {
-                    qrcode.decode();
-                }
-                catch (err) {
-                    // console.log(err);
-                }
-            },
-
-            stop: function () {
-                this.stopScan();
-                if (stream_obj) {
-                    if ('stop' in stream_obj) {
-                        stream_obj.stop();
+                    canvas.drawImage(this.$.video, 0, 0, w, h);
+                    try {
+                        qrcode.decodeCanvas(this.$.canvas);
+                    } catch (err) {
+                        this.$.output.innerHTML = err;
+                        // console.log(err);
                     }
-                    else {
-                        this.$.video.pause();
-                        this.$.video.src = null;
+                },
+                stop: function() {
+                    this.stopScan();
+                    if (stream_obj) {
+                        var track = stream_obj.getTracks()[0];
+                        track.stop();
+                        if ('stop' in stream_obj) {
+                            stream_obj.stop();
+                        } else {
+                            this.$.video.pause();
+                            this.$.video.src = null;
+                        }
                     }
                 }
-            }
-
-		});
-
-        onRead = function (el, value) {
-            var output,
+            });
+            //
+            onRead = function(el, value) {
+                var output,
                 attrs,
                 obj = window,
                 i;
-
-            if (el.output !== null) {
-                output = el.output ? document.querySelector(el.output) : el.$.output;
-                output[el.outputAttr] = value;
-            }
-            if (el.onRead) {
-                attrs = el.onRead.split('.');
-                for (i=0; i<attrs.length; i++) {
-                    obj = obj[attrs[i]];
+                if (el.output !== null) {
+                    output = el.output ? document.querySelector(el.output) : el.$.output;
+                    output[el.outputAttr] = value;
                 }
-                obj(value);
-            }
-            el.asyncFire('polymer-signal', {
-                name: 'qr-read',
-                data: {
-                    value: value
+                if (el.onread) {
+                    attrs = el.onread.split('.');
+                    for (i = 0; i < attrs.length; i++) {
+                        obj = obj[attrs[i]];
+                    }
+                    obj(value);
                 }
-            });
-        };
-
-    })();
-
-	</script>
-
-</polymer-element>
+                el.fire('polymer-signal', {
+                    name: 'qr-read',
+                    data: {
+                        value: value
+                    }
+                });
+            };
+        })();
+    </script>
+</dom-module>
