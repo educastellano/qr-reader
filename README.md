@@ -1,6 +1,6 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/webcomponent-qr-reader)
 
-# &lt;qr-code&gt;
+# &lt;qr-reader&gt;
 
 Web Component for reading QR Codes.
 
@@ -46,7 +46,7 @@ customElements.define('myapp-reader', QRReader)
 Use the `part` pseudo-element to style shadow DOM elements:
 
 ```css
-qr-code::part(video) {}
+qr-reader::part(video) {}
 ```
 
 ## Options
