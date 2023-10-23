@@ -1,48 +1,55 @@
-# &lt;qr-reader&gt;
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/webcomponent-qr-reader)
 
-Webcomponent wrapper to read QR codes, using [jsqrcode](https://github.com/LazarSoft/jsqrcode) lib.
+# &lt;qr-code&gt;
 
-> Maintained by [Eduard C.](https://github.com/educastellano).
+Web Component for reading QR Codes.
 
 ## Demo
 
-> [Check it live](http://educastellano.github.io/qr-reader). (works at least on Chrome Canary 32.0.1657.2)
+> [Check it live](http://educastellano.github.io/qr-reader/demo).
+
+## Install
+
+```sh
+npm install webcomponent-qr-reader
+```
 
 ## Usage
 
-1. Import Web Components' polyfill:
+```js
+import 'webcomponent-qr-reader'
+```
 
-	```html
-	<script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130711/polymer.min.js"></script>
-	```
+```html
+<qr-reader></qr-reader>
+```
 
-2. Import Custom Element:
+**Custom element name**
 
-	```html
-	<link rel="import" href="src/qr-reader.html">
-	```
+```js
+import QRReader from 'webcomponent-qr-reader/qr-reader'
 
-3. Import [jsqrcode](https://github.com/LazarSoft/jsqrcode) lib:
+customElements.define('myapp-reader', QRReader)
+```
 
-	```html
-	<script src="src/jsqrcode.js"></script>
-	```
+```html
+<myapp-reader></myapp-reader>
+```
 
-4. Start using it!
+**Custom styles**
 
-	```html
-	<qr-reader output></qr-reader>
-	```
+Use the `part` pseudo-element to style shadow DOM elements:
+
+```css
+qr-code::part(video) {}
+```
 
 ## Options
 
-Attribute     | Options                | Default             | Description
----           | ---                    | ---                 | ---
-`output`      | *string*               | `undefined`         | Default output if set, or CSS selectors of an external tag.
-`outputAttr`  | *string*          	   | `textContent`       | Attribute of the external tag where the value will be set.
-`onRead`      | *string*          	   | `undefined`         | String containing a function name to be executed after read. It can contain namespaces, i.e.: "App.ctrl.onRead".
-`interval`    | *int*                  | `1000`              | Interval of time in each capture (in ms).
-
+Attribute       | Options                   | Default             | Description
+---             | ---                       | ---                 | ---
+`scanInterval`  | *int*.                    | `100`               | Scan interval time in ms.
+`debounceTime`  | *int*                     | `2000`              | Time to ignore subsequent reads in ms.
 
 ## Contributing
 
@@ -52,8 +59,9 @@ Attribute     | Options                | Default             | Description
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-## History
-
+## Changelog
+* v1.0.0 October 23, 2023
+	* Complete re-write
 * v0.0.3 September 18, 2013
 	* jsqrcode it's not called from the component. It needs now to be added as a dependency.
 * v0.0.2 September 18, 2013

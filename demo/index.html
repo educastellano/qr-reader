@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>&lt;qr-reader&gt;</title>
+  <style type="text/css">
+    body {
+      padding: 32px;
+      background-color: #222;
+    }
+    .content {
+      display: flex;
+      justify-content: center;
+    }
+    qr-reader::part(video) {
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <qr-reader></qr-reader>
+  </div>
+
+  <script src="../dist/index.js"></script>
+  <script>
+    const reader = document.querySelector('qr-reader')
+    reader.addEventListener('read', event => {
+      window.alert(event.detail)
+      console.log(event.detail)
+    })
+  </script>
+</body>
+</html>
