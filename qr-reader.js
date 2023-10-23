@@ -4,6 +4,7 @@ const {
 } = window
 
 export default class QRReader extends HTMLElement {
+  #initialized = false
   #barcodeDetector = new BarcodeDetector({ formats: ['qr_code'] })
   #timer = 0
   video = null
@@ -34,7 +35,10 @@ export default class QRReader extends HTMLElement {
   // LifeCycle Callbacks
   //
   connectedCallback () {
-    this.initialize()
+    if (!this.#initialized) {
+      this.initialize()
+      this.#initialized = true
+    }
   }
 
   attributeChangedCallback (attributeName, oldValue, newValue) {

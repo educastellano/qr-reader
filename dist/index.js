@@ -7,6 +7,7 @@
   var QRReader = class _QRReader extends HTMLElement {
     #barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] });
     #timer = 0;
+    #initialized = false;
     video = null;
     canvas = null;
     constructor() {
@@ -28,7 +29,10 @@
     // LifeCycle Callbacks
     //
     connectedCallback() {
-      this.initialize();
+      if (!this.#initialized) {
+        this.initialize();
+        this.#initialized = true;
+      }
     }
     attributeChangedCallback(attributeName, oldValue, newValue) {
       const fn = this[attributeName + "Changed"];
