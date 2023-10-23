@@ -1,6 +1,6 @@
 {
   "name": "webcomponent-qr-reader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Web Component for reading QR codes",
   "main": "dist/index.js",
   "scripts": {
