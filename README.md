@@ -18,6 +18,11 @@ npm install webcomponent-qr-reader
 
 ```js
 import 'webcomponent-qr-reader'
+
+const reader = document.querySelector('qr-reader')
+reader.addEventListener('read', event => {
+  console.log(event.detail)
+})
 ```
 
 ```html
