@@ -44,12 +44,14 @@ export default class QRReader extends HTMLElement {
 
   disconnectedCallback () {
     clearInterval(this.#interval)
-    const tracks = this.video.srcObject.getTracks()
-    for (const track of tracks) {
-      track.stop()
-    }
     this.#interval = null
-    this.video.srcObject = null
+    if (this.video.srcObject) {
+      const tracks = this.video.srcObject.getTracks()
+      for (const track of tracks) {
+        track.stop()
+      }
+      this.video.srcObject = null
+    }
   }
 
   attributeChangedCallback (attributeName, oldValue, newValue) {
