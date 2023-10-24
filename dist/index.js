@@ -5,9 +5,10 @@
     BarcodeDetector
   } = window;
   var QRReader = class _QRReader extends HTMLElement {
+    #initialized = false;
     #barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] });
     #timer = 0;
-    #initialized = false;
+    #interval = null;
     video = null;
     canvas = null;
     constructor() {
@@ -33,6 +34,15 @@
         this.initialize();
         this.#initialized = true;
       }
+    }
+    disconnectedCallback() {
+      clearInterval(this.#interval);
+      const tracks = this.video.srcObject.getTracks();
+      for (const track of tracks) {
+        track.stop();
+      }
+      this.#interval = null;
+      this.video.srcObject = null;
     }
     attributeChangedCallback(attributeName, oldValue, newValue) {
       const fn = this[attributeName + "Changed"];
@@ -67,7 +77,7 @@
       this.shadowRoot.appendChild(div);
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         this.video.addEventListener("loadeddata", (event) => {
-          setInterval(this.detectCode, this.scanInterval);
+          this.#interval = setInterval(this.detectCode, this.scanInterval);
         });
         this.video.srcObject = await navigator.mediaDevices.getUserMedia({
           video: true,
